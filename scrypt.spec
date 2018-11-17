@@ -4,15 +4,15 @@
 #
 Name     : scrypt
 Version  : 0.8.6
-Release  : 2
+Release  : 3
 URL      : https://files.pythonhosted.org/packages/01/6f/3c8dd0f18f73ceddfbdd606c0c895ebb66748606682d77da3743c7c0c56f/scrypt-0.8.6.tar.gz
 Source0  : https://files.pythonhosted.org/packages/01/6f/3c8dd0f18f73ceddfbdd606c0c895ebb66748606682d77da3743c7c0c56f/scrypt-0.8.6.tar.gz
 Summary  : Bindings for the scrypt key derivation function library
 Group    : Development/Tools
 License  : BSD-2-Clause
-Requires: scrypt-python3
-Requires: scrypt-license
-Requires: scrypt-python
+Requires: scrypt-license = %{version}-%{release}
+Requires: scrypt-python = %{version}-%{release}
+Requires: scrypt-python3 = %{version}-%{release}
 BuildRequires : buildreq-distutils3
 BuildRequires : openssl-dev
 
@@ -34,7 +34,7 @@ license components for the scrypt package.
 %package python
 Summary: python components for the scrypt package.
 Group: Default
-Requires: scrypt-python3
+Requires: scrypt-python3 = %{version}-%{release}
 
 %description python
 python components for the scrypt package.
@@ -57,8 +57,8 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1533785599
-python3 setup.py build -b py3
+export SOURCE_DATE_EPOCH=1542433357
+python3 setup.py build
 
 %check
 export http_proxy=http://127.0.0.1:9/
@@ -67,9 +67,9 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 PYTHONPATH=%{buildroot}/usr/lib/python3.7/site-packages python3 setup.py test
 %install
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/scrypt
-cp LICENSE %{buildroot}/usr/share/doc/scrypt/LICENSE
-python3 -tt setup.py build -b py3 install --root=%{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/scrypt
+cp LICENSE %{buildroot}/usr/share/package-licenses/scrypt/LICENSE
+python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
@@ -78,8 +78,8 @@ echo ----[ mark ]----
 %defattr(-,root,root,-)
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/scrypt/LICENSE
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/scrypt/LICENSE
 
 %files python
 %defattr(-,root,root,-)
