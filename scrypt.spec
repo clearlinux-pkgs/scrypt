@@ -4,7 +4,7 @@
 #
 Name     : scrypt
 Version  : 0.8.13
-Release  : 9
+Release  : 10
 URL      : https://files.pythonhosted.org/packages/80/3d/141eb80e754b86f6c25a2ffaf6c3af3acdb65a3e3700829a05ab0c5d965d/scrypt-0.8.13.tar.gz
 Source0  : https://files.pythonhosted.org/packages/80/3d/141eb80e754b86f6c25a2ffaf6c3af3acdb65a3e3700829a05ab0c5d965d/scrypt-0.8.13.tar.gz
 Summary  : Bindings for the scrypt key derivation function library
@@ -51,14 +51,22 @@ python3 components for the scrypt package.
 
 %prep
 %setup -q -n scrypt-0.8.13
+cd %{_builddir}/scrypt-0.8.13
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1551466044
-export LDFLAGS="${LDFLAGS} -fno-lto"
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1576015392
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 export MAKEFLAGS=%{?_smp_mflags}
 python3 setup.py build
 
@@ -66,12 +74,12 @@ python3 setup.py build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-PYTHONPATH=%{buildroot}/usr/lib/python3.7/site-packages python3 setup.py test
+PYTHONPATH=%{buildroot}$(python -c "import sys; print(sys.path[-1])") python setup.py test
 %install
 export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/scrypt
-cp LICENSE %{buildroot}/usr/share/package-licenses/scrypt/LICENSE
+cp %{_builddir}/scrypt-0.8.13/LICENSE %{buildroot}/usr/share/package-licenses/scrypt/d2dd640c2580c12896717185914dbe0d04046133
 python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
@@ -82,7 +90,7 @@ echo ----[ mark ]----
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/scrypt/LICENSE
+/usr/share/package-licenses/scrypt/d2dd640c2580c12896717185914dbe0d04046133
 
 %files python
 %defattr(-,root,root,-)
