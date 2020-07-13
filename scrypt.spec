@@ -4,7 +4,7 @@
 #
 Name     : scrypt
 Version  : 0.8.15
-Release  : 13
+Release  : 14
 URL      : https://files.pythonhosted.org/packages/cb/a0/69cf3354052735690991679cc75b207fd387827ff4e862b3ff219de036fb/scrypt-0.8.15.tar.gz
 Source0  : https://files.pythonhosted.org/packages/cb/a0/69cf3354052735690991679cc75b207fd387827ff4e862b3ff219de036fb/scrypt-0.8.15.tar.gz
 Summary  : Bindings for the scrypt key derivation function library
