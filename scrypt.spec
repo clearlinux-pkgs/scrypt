@@ -4,7 +4,7 @@
 #
 Name     : scrypt
 Version  : 0.8.17
-Release  : 16
+Release  : 17
 URL      : https://files.pythonhosted.org/packages/57/02/040f517985d66e2b453ac1abf50e9e4fde64094f64029add8bbd28b6d331/scrypt-0.8.17.tar.gz
 Source0  : https://files.pythonhosted.org/packages/57/02/040f517985d66e2b453ac1abf50e9e4fde64094f64029add8bbd28b6d331/scrypt-0.8.17.tar.gz
 Summary  : Bindings for the scrypt key derivation function library
